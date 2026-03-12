@@ -53,3 +53,64 @@ header {
   background-color: #fff;
   color: #000;
 }
+
+/* Home page */
+.home-page {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.welcome-text {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.welcome-text h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  letter-spacing: -2px;
+}
+
+.welcome-text p {
+  font-size: 18px;
+  color: #666;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  display: block;
+  padding: 30px;
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.feature-card:hover {
+  border-color: #fff;
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.feature-card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.6;
+}
