@@ -36,10 +36,10 @@ class Speedtest {
       const response = await fetch(`${this.apiUrl}/api/ip`);
       const data = await response.json();
       
-      if (data.ip) {
+      if (data.ip && data.ip !== 'unknown') {
         this.ipAddress.textContent = data.ip;
         this.isp.textContent = data.isp || '--';
-        this.location.textContent = data.location || '--';
+        this.location.textContent = data.location || data.city || '--';
         return;
       }
     } catch (e) {

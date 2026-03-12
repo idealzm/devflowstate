@@ -49,11 +49,17 @@ const server = http.createServer((req, res) => {
   // API: Информация о клиенте
   if (url.pathname === '/api/ip') {
     const clientIp = req.socket.remoteAddress || req.connection.remoteAddress;
+    const ip = clientIp?.replace('::ffff:', '') || 'unknown';
+    
+    // Простая эмуляция локации по IP (для локального использования)
+    // В продакшене можно подключить maxmind geoip-db
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
-      ip: clientIp?.replace('::ffff:', '') || 'unknown',
-      isp: 'Network Provider',
-      location: 'Unknown'
+      ip: ip,
+      isp: 'Local Network',
+      location: 'localhost',
+      country: 'Unknown',
+      city: 'Unknown'
     }));
     return;
   }
