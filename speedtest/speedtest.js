@@ -32,23 +32,35 @@ class Speedtest {
   }
 
   async loadConnectionInfo() {
-    try {
-      const response = await fetch(`${this.apiUrl}/api/ip`);
-      const data = await response.json();
-      
-      if (data.ip && data.ip !== 'unknown') {
-        this.ipAddress.textContent = data.ip;
-        this.isp.textContent = data.isp || '--';
-        this.location.textContent = data.location || data.city || '--';
-        return;
+    // Используем публичные API для определения IP
+    const services = [
+      'https://ipapi.co/json/',
+      'https://ipwhois.app/json/',
+      'https://api.ip.sb/geoip'
+    ];
+
+    (async () => {
+      for (const url of services) {
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          
+          if (data.ip || data.query) {
+            this.ipAddress.textContent = data.ip || data.query || '--';
+            this.isp.textContent = data.org || data.isp || data.asn || '--';
+            this.location.textContent = data.city ? `${data.city}, ${data.country_name || data.country}` : '--';
+            return;
+          }
+        } catch (e) {
+          continue;
+        }
       }
-    } catch (e) {
-      console.log('IP API failed:', e.message);
-    }
-    
-    this.ipAddress.textContent = '--';
-    this.isp.textContent = '--';
-    this.location.textContent = '--';
+      
+      // Fallback
+      this.ipAddress.textContent = '--';
+      this.isp.textContent = '--';
+      this.location.textContent = '--';
+    })();
   }
 
   async startTest() {
