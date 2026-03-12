@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo/Video Converter - DevFlowState</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="converter.css">
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <main class="converter-page">
+    <h1>Photo/Video Converter</h1>
+    
+    <div class="converter-container">
+      <div class="upload-area" id="upload-area">
+        <div class="upload-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 6C2 4.89543 2.89543 4 4 4H9C9.26522 4 9.51957 4.10536 9.70711 4.29289L11.4142 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6ZM8.58579 6L4 6V18H20V8H11C10.7348 8 10.4804 7.89464 10.2929 7.70711L8.58579 6ZM12 10C12.5523 10 13 10.4477 13 11V12H14C14.5523 12 15 12.4477 15 13C15 13.5523 14.5523 14 14 14H13V15C13 15.5523 12.5523 16 12 16C11.4477 16 11 15.5523 11 15V14H10C9.44772 14 9 13.5523 9 13C9 12.4477 9.44772 12 10 12H11V11C11 10.4477 11.4477 10 12 10Z" fill="white"/>
+          </svg>
+        </div>
+        <p>Перетащите файлы сюда или кликните для выбора</p>
+        <p class="upload-hint">Изображения: JPG, PNG, GIF, WEBP, BMP, TIFF, SVG, ICO, AVIF, HEIC<br>Видео: MP4, WEBM, AVI, MOV, MKV, WMV, FLV, 3GP</p>
+        <input type="file" id="file-input" multiple accept="image/*,video/*">
+      </div>
+
+      <div class="settings-area" id="settings-area" style="display: none;">
+        <h2>Настройки конвертации</h2>
+        
+        <div class="setting-group">
+          <label for="output-format">Формат:</label>
+          <select id="output-format">
+            <optgroup label="Изображения">
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WEBP</option>
+              <option value="image/gif">GIF</option>
+              <option value="image/bmp">BMP</option>
+              <option value="image/tiff">TIFF</option>
+              <option value="image/avif">AVIF</option>
+              <option value="image/x-icon">ICO</option>
+              <option value="image/svg+xml">SVG (обёртка)</option>
+              <option value="image/svg+xml;tracer=true">SVG (векторизация)</option>
+            </optgroup>
+            <optgroup label="Видео">
+              <option value="video/mp4">MP4</option>
+              <option value="video/webm">WEBM</option>
+              <option value="video/x-msvideo">AVI</option>
+              <option value="video/quicktime">MOV</option>
+              <option value="video/x-matroska">MKV</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="setting-group" id="quality-group">
+          <label for="quality">Качество: <span id="quality-value">80</span>%</label>
+          <input type="range" id="quality" min="1" max="100" value="80">
+        </div>
+
+        <div class="setting-group" id="width-group">
+          <label for="width">Ширина (px):</label>
+          <input type="number" id="width" placeholder="Оригинал">
+        </div>
+
+        <div class="setting-group" id="height-group">
+          <label for="height">Высота (px):</label>
+          <input type="number" id="height" placeholder="Оригинал">
+        </div>
+
+        <div class="convert-btn-wrapper">
+          <button class="convert-btn" id="convert-btn">Конвертировать</button>
+        </div>
+      </div>
+
+      <div class="files-list" id="files-list"></div>
+
+      <div class="results-area" id="results-area" style="display: none;">
+        <h2>Результаты</h2>
+        <div class="results-list" id="results-list"></div>
+        <div class="auto-delete-notice">
+          <span class="clock-icon">⏱️</span>
+          <span>Файлы будут автоматически удалены через <span id="countdown">5:00</span></span>
+        </div>
+        <button class="download-all-btn" id="download-all-btn">Скачать все</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/imagetracerjs@1.2.6/imagetracer_v1.2.6.min.js"></script>
+  <script src="converter.js"></script>
+</body>
+</html>
