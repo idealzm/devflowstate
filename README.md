@@ -45,6 +45,30 @@ npm install
 npm start
 ```
 
+### Запуск через PM2
+
+```bash
+# Установка PM2
+npm install -g pm2
+
+# Запуск приложения
+pm2 start ecosystem.config.js
+
+# Или напрямую
+pm2 start server.js --name devflowstate
+
+# Запуск с автозагрузкой
+pm2 startup
+pm2 save
+
+# Управление
+pm2 status              # Статус
+pm2 logs devflowstate   # Логи
+pm2 restart devflowstate # Перезапуск
+pm2 stop devflowstate   # Остановка
+pm2 delete devflowstate # Удаление
+```
+
 ### На VPS (Ubuntu/Debian)
 
 ```bash

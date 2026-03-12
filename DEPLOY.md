@@ -16,6 +16,34 @@ docker-compose logs -f
 docker-compose down
 ```
 
+## Запуск через PM2 (рекомендуется для VPS)
+
+```bash
+# 1. Установка Node.js и PM2
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g pm2
+
+# 2. Установка приложения
+cd /var/www/devflowstate
+npm install --production
+
+# 3. Запуск через PM2
+pm2 start ecosystem.config.js
+
+# 4. Автозагрузка при старте системы
+pm2 startup systemd
+pm2 save
+
+# 5. Управление
+pm2 status              # Статус приложений
+pm2 logs devflowstate   # Просмотр логов
+pm2 restart devflowstate # Перезапуск
+pm2 stop devflowstate   # Остановка
+pm2 delete devflowstate # Удаление из списка
+pm2 monit              # Мониторинг в реальном времени
+```
+
 ## Деплой на VPS (Ubuntu 22.04)
 
 ### 1. Подготовка сервера
