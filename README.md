@@ -1,172 +1,183 @@
 # DevFlowState
 
-Веб-приложение с инструментами для разработчиков: конвертер фото/видео и тест скорости интернета.
+Personal multi-page website with utilities (Speedtest, Photo/Video Converter).
 
-## 🚀 Возможности
-
-### Photo/Video Converter
-- Конвертация изображений: JPEG, PNG, WEBP, GIF, BMP, TIFF, AVIF, ICO
-- Векторизация в SVG (ImageTracer)
-- Изменение размеров
-- Регулировка качества
-- Автоудаление результатов через 5 минут
-
-### Speedtest
-- Измерение Ping
-- Тест Download скорости
-- Тест Upload скорости
-- Отображение IP адреса
-- Real-time gauge индикатор
-
-## 📦 Установка
-
-### Через Docker (рекомендуется)
-
-```bash
-# Сборка и запуск
-docker-compose up -d
-
-# Просмотр логов
-docker-compose logs -f
-
-# Остановка
-docker-compose down
-```
-
-Приложение доступно по адресу: http://localhost:3000
-
-### Ручная установка
-
-```bash
-# Установка зависимостей
-npm install
-
-# Запуск
-npm start
-```
-
-### Запуск через PM2
-
-```bash
-# Установка PM2
-npm install -g pm2
-
-# Запуск приложения
-pm2 start ecosystem.config.js
-
-# Или напрямую
-pm2 start server.js --name devflowstate
-
-# Запуск с автозагрузкой
-pm2 startup
-pm2 save
-
-# Управление
-pm2 status              # Статус
-pm2 logs devflowstate   # Логи
-pm2 restart devflowstate # Перезапуск
-pm2 stop devflowstate   # Остановка
-pm2 delete devflowstate # Удаление
-```
-
-### На VPS (Ubuntu/Debian)
-
-```bash
-# Установка Node.js
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Клонирование репозитория
-cd /var/www
-git clone <repository-url> devflowstate
-cd devflowstate
-
-# Установка зависимостей
-npm install --production
-
-# Копирование systemd сервиса
-sudo cp devflowstate.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable devflowstate
-sudo systemctl start devflowstate
-
-# Проверка статуса
-sudo systemctl status devflowstate
-```
-
-## 🔧 Конфигурация
-
-### Переменные окружения
-
-| Переменная | Значение по умолчанию | Описание |
-|------------|----------------------|----------|
-| `PORT` | 3000 | Порт сервера |
-| `HOST` | 0.0.0.0 | Хост сервера |
-| `NODE_ENV` | production | Режим работы |
-
-### Nginx (для HTTPS)
-
-1. Установите Nginx:
-```bash
-sudo apt install nginx
-```
-
-2. Настройте SSL (Let's Encrypt):
-```bash
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d your-domain.com
-```
-
-3. Скопируйте конфигурацию:
-```bash
-sudo cp nginx.conf /etc/nginx/sites-available/devflowstate
-sudo ln -s /etc/nginx/sites-available/devflowstate /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-## 📡 API Endpoints
-
-| Метод | Endpoint | Описание |
-|-------|----------|----------|
-| GET | `/api/ip` | Информация о клиенте |
-| GET | `/api/ping` | Ping тест |
-| GET | `/api/download/:size` | Download тест (1mb, 5mb, 10mb) |
-| POST | `/api/upload` | Upload тест |
-
-## 🗂️ Структура проекта
+## Project Structure
 
 ```
 devflowstate/
-├── server.js              # Основной сервер
-├── package.json           # Зависимости
-├── Dockerfile            # Docker образ
-├── docker-compose.yml    # Docker Compose
-├── nginx.conf            # Nginx конфигурация
-├── devflowstate.service  # systemd сервис
-├── index.html            # Главная страница
-├── style.css             # Основные стили
-├── script.js             # Общий JavaScript
-├── components/
-│   └── header.html       # Header компонент
-├── photo-video-converter/
-│   ├── index.html        # Страница конвертера
-│   ├── converter.css     # Стили конвертера
-│   └── converter.js      # Логика конвертера
-└── speedtest/
-    ├── index.html        # Страница speedtest
-    ├── speedtest.css     # Стили speedtest
-    └── speedtest.js      # Логика speedtest
+├── server/              # Node.js server
+│   └── index.js         # Express server with API
+├── public/              # Static files
+│   ├── css/             # Stylesheets
+│   ├── js/              # JavaScript files
+│   ├── img/             # Images
+│   ├── index.html       # Main page
+│   ├── speedtest.html   # Speedtest page
+│   └── converter.html   # Converter page
+├── uploads/             # Temporary file storage (auto-created)
+├── logs/                # PM2 logs (auto-created)
+├── package.json         # Node.js dependencies
+├── ecosystem.config.js  # PM2 configuration
+├── .env                 # Environment variables
+└── .env.example         # Environment variables template
 ```
 
-## 🔒 Безопасность
+## Requirements
 
-- Helmet.js для защиты заголовков
-- CORS настроен
-- Compression для оптимизации
-- Morgan для логирования
+- Node.js 18+ 
+- npm or yarn
+- PM2 (for production)
+- FFmpeg (for video conversion)
 
-## 📝 Лицензия
+## Installation
 
-MIT
+### 1. Install System Dependencies
+
+**Ubuntu/Debian:**
+```bash
+sudo apt update
+sudo apt install -y ffmpeg nodejs npm
+```
+
+**CentOS/RHEL:**
+```bash
+sudo yum install -y ffmpeg nodejs npm
+```
+
+**macOS:**
+```bash
+brew install ffmpeg node
+```
+
+### 2. Install Node.js Dependencies
+
+```bash
+cd /path/to/devflowstate
+npm install
+```
+
+### 3. Configure Environment
+
+```bash
+cp .env.example .env
+nano .env  # Edit if needed
+```
+
+### 4. Install PM2 (for production)
+
+```bash
+npm install -g pm2
+```
+
+## Running the Application
+
+### Development Mode
+
+```bash
+npm run dev
+```
+
+### Production Mode (PM2)
+
+```bash
+# Start
+npm run pm2:start
+
+# Or directly
+pm2 start ecosystem.config.js
+
+# View logs
+pm2 logs devflowstate
+
+# Monitor
+pm2 monit
+
+# Stop
+pm2 stop devflowstate
+
+# Restart
+pm2 restart devflowstate
+```
+
+### Setup PM2 on Startup (auto-restart on server reboot)
+
+```bash
+pm2 startup
+pm2 save
+```
+
+## API Endpoints
+
+### Convert Image
+```
+POST /api/convert/image
+Content-Type: multipart/form-data
+
+Parameters:
+- file: Image file
+- format: Target format (jpg, png, webp, gif, bmp, tiff, avif)
+- quality: Quality level (1-100, default: 80)
+
+Response:
+{
+  "success": true,
+  "filename": "uuid.jpg",
+  "downloadUrl": "/download/uuid.jpg",
+  "size": 12345,
+  "format": "jpg"
+}
+```
+
+### Convert Video
+```
+POST /api/convert/video
+Content-Type: multipart/form-data
+
+Parameters:
+- file: Video file
+- format: Target format (mp4, webm, avi, mov, mkv, flv, wmv, m4v)
+- quality: Quality preset (low, medium, high, ultra)
+
+Response:
+{
+  "success": true,
+  "filename": "uuid.mp4",
+  "downloadUrl": "/download/uuid.mp4",
+  "size": 12345678,
+  "format": "mp4"
+}
+```
+
+### Download File
+```
+GET /download/:filename
+```
+
+### Get File Info
+```
+GET /api/file/:filename
+
+Response:
+{
+  "exists": true,
+  "filename": "uuid.mp4",
+  "size": 12345678,
+  "timeLeft": 300
+}
+```
+
+## File Cleanup
+
+Files are automatically deleted after 5 minutes. The cleanup runs every minute.
+
+## Pages
+
+- `/` - Main page with multilingual welcome
+- `/speedtest` - Internet speed test
+- `/converter` - Photo/Video converter
+
+## License
+
+ISC
 # devflowstate

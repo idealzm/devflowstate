@@ -2,27 +2,23 @@ module.exports = {
   apps: [
     {
       name: 'devflowstate',
-      script: 'server.js',
+      script: './server/index.js',
       instances: 1,
-      exec_mode: 'fork',
       autorestart: true,
       watch: false,
-      max_memory_restart: '500M',
+      max_memory_restart: '1G',
       env: {
         NODE_ENV: 'production',
-        PORT: 3000,
-        HOST: '0.0.0.0'
+        PORT: 3000
       },
-      env_production: {
-        NODE_ENV: 'production',
-        PORT: 3000,
-        HOST: '0.0.0.0'
+      env_development: {
+        NODE_ENV: 'development',
+        PORT: 3000
       },
-      error_file: './logs/pm2-err.log',
+      error_file: './logs/pm2-error.log',
       out_file: './logs/pm2-out.log',
       log_file: './logs/pm2-combined.log',
-      time: true,
-      merge_logs: true
+      time: true
     }
   ]
 };
