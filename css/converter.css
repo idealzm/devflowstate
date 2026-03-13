@@ -27,18 +27,10 @@
     margin-bottom: 30px;
 }
 
-.main h1 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
 /* Upload Zone */
 .upload-zone {
     border: 1px dashed #333;
-    padding: 60px 40px;
+    padding: 40px 30px;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.2s ease, background 0.2s ease;
@@ -52,9 +44,9 @@
 }
 
 .upload-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 20px;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
     color: #444;
     transition: color 0.2s ease;
 }
@@ -343,21 +335,17 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .main h1 {
-        font-size: 20px;
-    }
-
     .converter-card {
         padding: 25px 15px;
     }
 
     .upload-zone {
-        padding: 40px 20px;
+        padding: 30px 20px;
     }
 
     .upload-icon {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
     }
 
     .file-info {
