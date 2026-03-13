@@ -33,11 +33,84 @@
 
     <main class="main">
         <h1>Photo/Video Converter</h1>
+        
+        <div class="converter-wrapper">
+            <div class="converter-card">
+                <h2 class="converter-title">Photo/Video Converter</h2>
+                
+                <!-- Upload Zone -->
+                <div id="uploadZone" class="upload-zone">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drag & drop your file here or click to browse</p>
+                    <p class="upload-formats">Supports: JPG, PNG, WEBP, GIF, BMP, TIFF, AVIF, MP4, WEBM, AVI, MOV, MKV, FLV, WMV, M4V</p>
+                    <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;">
+                </div>
+
+                <!-- Converter Options -->
+                <div id="converterOptions" class="converter-options" style="display: none;">
+                    <div class="file-info">
+                        <span class="file-name" id="fileName"></span>
+                        <span class="file-size" id="fileSize"></span>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label class="option-label" for="formatSelect">Output Format</label>
+                        <select class="option-select" id="formatSelect"></select>
+                    </div>
+
+                    <div id="qualityGroup" class="option-group">
+                        <label class="option-label" for="qualitySelect">Quality</label>
+                        <select class="option-select" id="qualitySelect">
+                            <option value="ultra">Ultra</option>
+                            <option value="high" selected>High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <button id="convertBtn" class="convert-btn">Convert</button>
+                </div>
+
+                <!-- Progress Section -->
+                <div id="progressSection" class="progress-section" style="display: none;">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <p id="progressText" class="progress-text">Processing...</p>
+                </div>
+
+                <!-- Result Section -->
+                <div id="resultSection" class="result-section" style="display: none;">
+                    <div class="result-info">
+                        <span class="result-label">Converted File</span>
+                        <span class="result-filename" id="resultFilename"></span>
+                        <span class="result-size" id="resultSize"></span>
+                    </div>
+                    <div class="result-actions">
+                        <a id="downloadBtn" class="download-btn" download>Download</a>
+                        <button id="convertAnotherBtn" class="convert-another-btn">Convert Another</button>
+                    </div>
+                    <p class="auto-delete-notice">File will be deleted in <span id="deleteTimer">5:00</span></p>
+                </div>
+
+                <!-- Error Section -->
+                <div id="errorSection" class="error-section" style="display: none;">
+                    <p class="error-message" id="errorMessage"></p>
+                    <button id="retryBtn" class="retry-btn">Try Again</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
         <p class="footer-placeholder">Footer placeholder</p>
     </footer>
+    <link rel="stylesheet" href="css/converter.css">
     <script src="js/main.js"></script>
+    <script src="js/converter.js"></script>
 </body>
 </html>
