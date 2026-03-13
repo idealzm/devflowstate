@@ -37,17 +37,17 @@ devflowstate/
 **Ubuntu/Debian:**
 ```bash
 sudo apt update
-sudo apt install -y ffmpeg nodejs npm
+sudo apt install -y ffmpeg nodejs npm nginx
 ```
 
 **CentOS/RHEL:**
 ```bash
-sudo yum install -y ffmpeg nodejs npm
+sudo yum install -y ffmpeg nodejs npm nginx
 ```
 
 **macOS:**
 ```bash
-brew install ffmpeg node
+brew install ffmpeg node nginx
 ```
 
 ### 2. Install Node.js Dependencies
@@ -68,6 +68,42 @@ nano .env  # Edit if needed
 
 ```bash
 npm install -g pm2
+```
+
+### 5. Setup SSL with Let's Encrypt
+
+```bash
+# Install Certbot
+sudo apt install -y certbot python3-certbot-nginx
+
+# Get SSL certificate
+sudo certbot --nginx -d your-domain.com
+
+# Certbot will automatically configure nginx with SSL
+# Certificates are stored in /etc/letsencrypt/live/your-domain.com/
+```
+
+### 6. Configure Nginx
+
+```bash
+# Copy nginx config
+sudo cp nginx.conf /etc/nginx/sites-available/devflowstate
+
+# Edit domain name
+sudo nano /etc/nginx/sites-available/devflowstate
+# Replace 'your-domain.com' with your actual domain
+
+# Create symlink
+sudo ln -s /etc/nginx/sites-available/devflowstate /etc/nginx/sites-enabled/
+
+# Remove default config
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# Test nginx config
+sudo nginx -t
+
+# Reload nginx
+sudo systemctl reload nginx
 ```
 
 ## Running the Application
